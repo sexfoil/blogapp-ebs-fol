@@ -39,30 +39,36 @@ public class PostService {
     public PostDto createPost(PostDto post) {
         PostEntity postEntity = postMapper.postDtoToEntity(post);
 
-        Set<TagEntity> tags = new HashSet<>();
-        if (post.getTags() != null) {
-            tags = post.getTags().stream()
-                    .map(tagService::getTagByValue)
-                    .collect(Collectors.toSet());
-        }
+        Set<TagEntity> tagEntities = getTagEntities(post.getTags());
+        postEntity.setTags(tagEntities);
 
-        postEntity.setTags(tags);
         PostEntity newPostEntity = repository.save(postEntity);
         PostDto created = postMapper.postEntityToDto(newPostEntity);
-        created.setTags(postMapper.toDtoSet(tags));
+
+        created.setTags(postMapper.toDtoSet(tagEntities));
 
         return created;
     }
 
-    public PostDto updatePostTags(PostDto postDto) {
-        assert postDto.getId() != null;
-        PostEntity entity = repository.findById(postDto.getId()).orElseThrow();
-        postMapper.updatePostDtoFromEntity(postDto, entity);
+    public PostDto updatePostTags(Long id, Set<String> tags) {
+        PostEntity entity = repository.findById(id).orElseThrow(); // will be handled later
+        entity.setTags(getTagEntities(tags));
         PostEntity updatedEntity = repository.save(entity);
         return postMapper.postEntityToDto(updatedEntity);
     }
 
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    private Set<TagEntity> getTagEntities(Set<String> tags) {
+        Set<TagEntity> tagEntities = new HashSet<>();
+        if (tags != null) {
+            tagEntities = tags.stream()
+                    .map(tagService::getTagByValue)
+                    .collect(Collectors.toSet());
+        }
+        return tagEntities;
+
     }
 }

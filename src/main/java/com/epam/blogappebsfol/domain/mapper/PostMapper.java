@@ -11,11 +11,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface PostMapper {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updatePostDtoFromEntity(PostDto dto, @MappingTarget PostEntity entity);
-
-    @Mapping(target = "tags", ignore = true)
-
     PostDto postEntityToDto(PostEntity entity);
 
     @Mapping(target = "tags", ignore = true)
@@ -28,8 +23,5 @@ public interface PostMapper {
         return entities.stream()
                 .map(TagEntity::getValue)
                 .collect(Collectors.toSet());
-    }
-    default TagEntity toTagEntity(String value) {
-        return TagEntity.builder().value("WTF").build();
     }
 }

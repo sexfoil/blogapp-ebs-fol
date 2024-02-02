@@ -31,9 +31,9 @@ public class PostController {
         return postService.createPost(post);
     }
 
-    @PatchMapping
-    public PostDto updatePost(@RequestBody PostDto post) {
-        return postService.updatePostTags(post);
+    @PatchMapping("/{id}")
+    public PostDto updatePost(@PathVariable Long id, @RequestBody String[] tags) {
+        return postService.updatePostTags(id, Set.of(tags));
     }
 
     @DeleteMapping

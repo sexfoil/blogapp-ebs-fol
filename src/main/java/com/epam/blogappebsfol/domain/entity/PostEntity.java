@@ -30,10 +30,11 @@ public class PostEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "post_tags",
+            name = "posts_tags",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     @Builder.Default
+    @Column(name = "tags")
     Set<TagEntity> tags = new HashSet<>();
 }
