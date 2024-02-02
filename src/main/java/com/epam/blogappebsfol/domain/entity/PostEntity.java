@@ -34,5 +34,6 @@ public class PostEntity {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
+    @Builder.Default
     Set<TagEntity> tags = new HashSet<>();
 }

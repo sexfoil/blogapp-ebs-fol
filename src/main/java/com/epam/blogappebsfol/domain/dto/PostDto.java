@@ -21,13 +21,10 @@ public class PostDto {
     @Nullable
     private Long id;
 
-//    @JsonProperty("title")
     private String title;
 
-//    @JsonProperty("content")
     private String content;
 
-//    @JsonProperty("tags")
     @Nullable
-    private Set<TagDto> tags;
+    private Set<String> tags;
 }

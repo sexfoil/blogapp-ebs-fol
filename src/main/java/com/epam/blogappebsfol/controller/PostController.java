@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/posts")
@@ -18,6 +19,11 @@ public class PostController {
     @GetMapping
     public List<PostDto> getAllPosts() {
         return postService.getPosts();
+    }
+
+    @GetMapping("/tags")
+    public List<PostDto> getAllPostsByTags(@RequestParam Set<String> tags) {
+        return postService.getPostsByTags(tags);
     }
 
     @PostMapping

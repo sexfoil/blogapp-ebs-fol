@@ -21,6 +21,8 @@ public class TagDto {
     @Nullable
     private Long id;
 
+    private String value;
+
     @Nullable
     private Set<PostDto> posts;
 }

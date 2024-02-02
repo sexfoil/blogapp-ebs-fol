@@ -26,5 +26,6 @@ public class TagEntity {
     String value;
 
     @ManyToMany(mappedBy = "tags")
+
     Set<PostEntity> posts = new HashSet<>();
 }
