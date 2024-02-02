@@ -1,5 +1,6 @@
 package com.epam.blogappebsfol.controller;
 
+import com.epam.blogappebsfol.domain.dto.PostDto;
 import com.epam.blogappebsfol.domain.entity.PostEntity;
 import com.epam.blogappebsfol.service.PostService;
 import lombok.AllArgsConstructor;
@@ -15,22 +16,22 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public List<PostEntity> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return postService.getPosts();
     }
 
     @PostMapping
-    public PostEntity createPost(@RequestBody PostEntity post) {
+    public PostDto createPost(@RequestBody PostDto post) {
         return postService.createPost(post);
     }
 
     @PatchMapping
-    public PostEntity updatePost(@RequestBody PostEntity post) {
+    public PostDto updatePost(@RequestBody PostDto post) {
         return postService.updatePostTags(post);
     }
 
     @DeleteMapping
-    public void deletePost(@RequestBody PostEntity post) {
+    public void deletePost(@RequestBody PostDto post) {
         postService.deleteById(post.getId());
     }
 }
