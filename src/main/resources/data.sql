@@ -10,7 +10,9 @@ INSERT INTO tags (tag_id, tag_value) VALUES (9, 'bean');
 
 INSERT INTO posts (post_id, post_title, post_content) VALUES ( 1, 'java talk', 'we going to talk about java core' );
 INSERT INTO posts (post_id, post_title, post_content) VALUES ( 2, 'spring security', 'to configure spring security just use java and bean' );
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 3, 'spring sql', 'do you know something about spring sql' );
+INSERT INTO posts (post_id, post_title, post_content) VALUES ( 3, 'spring sql', 'data storage and spring sql' );
+INSERT INTO posts (post_id, post_title, post_content) VALUES ( 4, 'spring core', 'bean is main thing in spring core' );
+INSERT INTO posts (post_id, post_title, post_content) VALUES ( 5, 'hibernate talk', 'hibernate is powerful jpa specification for spring to deal with sql data' );
 
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 1, 2 );
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 1, 3 );
@@ -20,3 +22,11 @@ INSERT INTO posts_tags (post_id, tag_id) VALUES ( 2, 2 );
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 2, 9 );
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 3, 1 );
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 3, 5 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 3, 6 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 4, 9 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 4, 1 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 4, 3 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 5, 4 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 5, 1 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 5, 5 );
+INSERT INTO posts_tags (post_id, tag_id) VALUES ( 5, 6 );

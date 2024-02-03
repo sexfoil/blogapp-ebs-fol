@@ -19,12 +19,13 @@ import java.util.Set;
 public class PostEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "post_id")
     Long id;
 
     @Column(name = "post_title")
     String title;
+
     @Column(name = "post_content")
     String content;
 
@@ -34,7 +35,5 @@ public class PostEntity {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
-    @Builder.Default
-    @Column(name = "tags")
     Set<TagEntity> tags = new HashSet<>();
 }

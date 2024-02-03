@@ -6,6 +6,7 @@ import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.domain.mapper.TagMapper;
 import com.epam.blogappebsfol.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +20,13 @@ public class TagService {
     private final TagRepository repository;
     private final TagMapper mapper;
 
-    public Set<PostEntity> getPostsByTag(Set<String> dtos) {
-        List<TagEntity> allByValue = repository.findAllByValueIn(dtos);
-        return allByValue.stream()
+    public Set<PostEntity> getPostsByTag(Set<String> tags, int pageNumber, int pageSize) {
+        int pagesToSkip = pageNumber * pageSize;
+        List<TagEntity> tagEntities = repository.findAllPostsByTags(tags);
+        return tagEntities.stream()
                 .flatMap(tagEntity -> tagEntity.getPosts().stream())
+                .skip(pagesToSkip)
+                .limit(pageSize)
                 .collect(Collectors.toSet());
     }
 

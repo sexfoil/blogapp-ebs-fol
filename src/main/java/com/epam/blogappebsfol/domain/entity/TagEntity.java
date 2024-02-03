@@ -22,10 +22,9 @@ public class TagEntity {
     @Column(name = "tag_id")
     Long id;
 
-    @Column(name = "tag_value")
+    @Column(name = "tag_value", unique = true)
     String value;
 
     @ManyToMany(mappedBy = "tags")
-    @Column(name = "posts")
     Set<PostEntity> posts = new HashSet<>();
 }

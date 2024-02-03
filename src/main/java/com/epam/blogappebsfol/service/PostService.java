@@ -6,6 +6,8 @@ import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.domain.mapper.PostMapper;
 import com.epam.blogappebsfol.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -22,15 +24,15 @@ public class PostService {
 
     private final TagService tagService;
 
-    public List<PostDto> getPosts() {
-        List<PostEntity> posts = (List<PostEntity>) repository.findAll();
+    public List<PostDto> getPosts(int pageNumber, int pageSize) {
+        Page<PostEntity> posts = repository.findAllPosts(PageRequest.of(pageNumber, pageSize));
         return posts.stream()
                 .map(postMapper::postEntityToDto)
                 .toList();
     }
 
-    public List<PostDto> getPostsByTags(Set<String> tags) {
-        Set<PostEntity> posts = tagService.getPostsByTag(tags);
+    public List<PostDto> getPostsByTags(Set<String> tags, int pageNumber, int pageSize) {
+        Set<PostEntity> posts = tagService.getPostsByTag(tags, pageNumber, pageSize);
         return posts.stream()
                 .map(postMapper::postEntityToDto)
                 .toList();

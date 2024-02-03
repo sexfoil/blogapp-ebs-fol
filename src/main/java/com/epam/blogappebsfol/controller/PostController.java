@@ -17,13 +17,18 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public List<PostDto> getAllPosts() {
-        return postService.getPosts();
+    public List<PostDto> getAllPosts(
+            @RequestParam(required = false) Integer pageNumber,
+            @RequestParam(required = false) Integer pageSize) {
+        return postService.getPosts(pageNumber, pageSize);
     }
 
     @GetMapping("/tags")
-    public List<PostDto> getAllPostsByTags(@RequestParam Set<String> tags) {
-        return postService.getPostsByTags(tags);
+    public List<PostDto> getAllPostsByTags(
+            @RequestParam Set<String> tags,
+            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "20") Integer pageSize) {
+        return postService.getPostsByTags(tags, pageNumber, pageSize);
     }
 
     @PostMapping
