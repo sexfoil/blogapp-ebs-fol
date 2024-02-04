@@ -3,12 +3,16 @@ package com.epam.blogappebsfol.service;
 import com.epam.blogappebsfol.domain.dto.PostDto;
 import com.epam.blogappebsfol.domain.entity.PostEntity;
 import com.epam.blogappebsfol.domain.entity.TagEntity;
+import com.epam.blogappebsfol.domain.exception.PostDuplicateException;
+import com.epam.blogappebsfol.domain.exception.PostNotFoundException;
 import com.epam.blogappebsfol.domain.mapper.PostMapper;
 import com.epam.blogappebsfol.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository repository;
@@ -38,8 +43,15 @@ public class PostService {
                 .toList();
     }
 
+    @Transactional
     public PostDto createPost(PostDto post) {
+        if (post.getId() != null) {
+            throw new PostDuplicateException();
+        }
+
         PostEntity postEntity = postMapper.postDtoToEntity(post);
+
+        createTagIfNotExist(post.getTags());
 
         Set<TagEntity> tagEntities = getTagEntities(post.getTags());
         postEntity.setTags(tagEntities);
@@ -49,19 +61,33 @@ public class PostService {
 
         created.setTags(postMapper.toDtoSet(tagEntities));
 
+        log.info("Post with id: {} was successfully created.", created.getId());
         return created;
     }
 
+    @Transactional
     public PostDto updatePostTags(Long id, Set<String> tags) {
-        PostEntity post = repository.findById(id).orElseThrow(); // will be handled later
-        tagService.createTags(tags);
+        PostEntity post = repository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException(id));
+
+        createTagIfNotExist(tags);
         post.setTags(getTagEntities(tags));
         PostEntity updatedEntity = repository.save(post);
-        return postMapper.postEntityToDto(updatedEntity);
+
+        PostDto updated = postMapper.postEntityToDto(updatedEntity);
+
+        log.info("Post with id: {} was successfully updated.", id);
+        return updated;
     }
 
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
+        log.info("Post with id: {} was successfully deleted.", id);
+    }
+
+    private void createTagIfNotExist(Set<String> tags) {
+        tagService.createTags(tags);
     }
 
     private Set<TagEntity> getTagEntities(Set<String> tags) {
@@ -72,6 +98,5 @@ public class PostService {
                     .collect(Collectors.toSet());
         }
         return tagEntities;
-
     }
 }

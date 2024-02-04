@@ -6,6 +6,7 @@ import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.service.PostService;
 import com.epam.blogappebsfol.service.TagService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/posts")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
@@ -39,6 +40,7 @@ public class PostController {
         return postService.createPost(post);
     }
 
+    // todo DELETE BEFORE SEND
     @PostMapping("/tags")
     public List<TagEntity> createTags(@RequestBody PostDto post) {
         assert post.getTags() != null;

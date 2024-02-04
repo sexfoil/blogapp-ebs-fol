@@ -5,7 +5,9 @@ import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.domain.mapper.TagMapper;
 import com.epam.blogappebsfol.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TagService {
 
     private final TagRepository repository;
@@ -32,12 +35,16 @@ public class TagService {
         return repository.findByValue(value);
     }
 
+    @Transactional
     public List<TagEntity> createTags(Set<String> tags) {
         List<String> existingTags = repository.getAllTagValues();
         Set<TagEntity> tagEntities = tags.stream()
                 .filter(tag -> !existingTags.contains(tag))
                 .map(tag -> TagEntity.builder().value(tag).posts(Set.of()).build())
                 .collect(Collectors.toSet());
-        return repository.saveAll(tagEntities);
+        List<TagEntity> saved = repository.saveAll(tagEntities);
+
+        log.info("Tags were successfully created.");
+        return saved;
     }
 }
