@@ -53,9 +53,10 @@ public class PostService {
     }
 
     public PostDto updatePostTags(Long id, Set<String> tags) {
-        PostEntity entity = repository.findById(id).orElseThrow(); // will be handled later
-        entity.setTags(getTagEntities(tags));
-        PostEntity updatedEntity = repository.save(entity);
+        PostEntity post = repository.findById(id).orElseThrow(); // will be handled later
+        tagService.createTags(tags);
+        post.setTags(getTagEntities(tags));
+        PostEntity updatedEntity = repository.save(post);
         return postMapper.postEntityToDto(updatedEntity);
     }
 

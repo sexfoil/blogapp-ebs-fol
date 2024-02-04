@@ -12,6 +12,9 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     @Query(value = "SELECT * FROM tags WHERE tag_value = ?1", nativeQuery = true)
     TagEntity findByValue(String value);
 
+    @Query(value = "SELECT tag_value FROM tags", nativeQuery = true)
+    List<String> getAllTagValues();
+
     @Query(value = "SELECT * FROM tags WHERE tag_value IN (?1)", nativeQuery = true)
     List<TagEntity> findAllPostsByTags(Set<String> values);
 }

@@ -19,6 +19,7 @@ public interface PostMapper {
     default String fromTagEntity(TagEntity entity) {
         return entity.getValue();
     }
+
     default Set<String> toDtoSet(Set<TagEntity> entities) {
         return entities.stream()
                 .map(TagEntity::getValue)

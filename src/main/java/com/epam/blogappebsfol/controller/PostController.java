@@ -2,7 +2,9 @@ package com.epam.blogappebsfol.controller;
 
 import com.epam.blogappebsfol.domain.dto.PostDto;
 import com.epam.blogappebsfol.domain.entity.PostEntity;
+import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.service.PostService;
+import com.epam.blogappebsfol.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.Set;
 public class PostController {
 
     private final PostService postService;
+    private final TagService tagService;
 
     @GetMapping
     public List<PostDto> getAllPosts(
@@ -34,6 +37,12 @@ public class PostController {
     @PostMapping
     public PostDto createPost(@RequestBody PostDto post) {
         return postService.createPost(post);
+    }
+
+    @PostMapping("/tags")
+    public List<TagEntity> createTags(@RequestBody PostDto post) {
+        assert post.getTags() != null;
+        return tagService.createTags(post.getTags());
     }
 
     @PatchMapping("/{id}")

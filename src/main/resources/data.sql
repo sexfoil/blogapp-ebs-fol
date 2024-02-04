@@ -1,18 +1,19 @@
-INSERT INTO tags (tag_id, tag_value) VALUES (1, 'spring');
-INSERT INTO tags (tag_id, tag_value) VALUES (2, 'java');
-INSERT INTO tags (tag_id, tag_value) VALUES (3, 'core');
-INSERT INTO tags (tag_id, tag_value) VALUES (4, 'hibernate');
-INSERT INTO tags (tag_id, tag_value) VALUES (5, 'sql');
-INSERT INTO tags (tag_id, tag_value) VALUES (6, 'data');
-INSERT INTO tags (tag_id, tag_value) VALUES (7, 'kafka');
-INSERT INTO tags (tag_id, tag_value) VALUES (8, 'security');
-INSERT INTO tags (tag_id, tag_value) VALUES (9, 'bean');
+INSERT INTO tags (tag_value) VALUES ('spring');
+INSERT INTO tags (tag_value) VALUES ('java');
+INSERT INTO tags (tag_value) VALUES ('core');
+INSERT INTO tags (tag_value) VALUES ('hibernate');
+INSERT INTO tags (tag_value) VALUES ('sql');
+INSERT INTO tags (tag_value) VALUES ('data');
+INSERT INTO tags (tag_value) VALUES ('kafka');
+INSERT INTO tags (tag_value) VALUES ('security');
+INSERT INTO tags (tag_value) VALUES ('bean');
+INSERT INTO tags ( tag_value) VALUES ('js');
 
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 1, 'java talk', 'we going to talk about java core' );
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 2, 'spring security', 'to configure spring security just use java and bean' );
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 3, 'spring sql', 'data storage and spring sql' );
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 4, 'spring core', 'bean is main thing in spring core' );
-INSERT INTO posts (post_id, post_title, post_content) VALUES ( 5, 'hibernate talk', 'hibernate is powerful jpa specification for spring to deal with sql data' );
+INSERT INTO posts (post_title, post_content) VALUES ('java talk', 'we going to talk about java core' );
+INSERT INTO posts (post_title, post_content) VALUES ('spring security', 'to configure spring security just use java and beans' );
+INSERT INTO posts (post_title, post_content) VALUES ('spring sql', 'data storage and spring sql' );
+INSERT INTO posts (post_title, post_content) VALUES ('spring core', 'bean is main thing in spring core' );
+INSERT INTO posts (post_title, post_content) VALUES ('hibernate talk', 'hibernate is powerful jpa specification for spring to deal with sql data' );
 
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 1, 2 );
 INSERT INTO posts_tags (post_id, tag_id) VALUES ( 1, 3 );

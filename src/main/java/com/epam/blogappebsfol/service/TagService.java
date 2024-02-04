@@ -1,12 +1,10 @@
 package com.epam.blogappebsfol.service;
 
-import com.epam.blogappebsfol.domain.dto.TagDto;
 import com.epam.blogappebsfol.domain.entity.PostEntity;
 import com.epam.blogappebsfol.domain.entity.TagEntity;
 import com.epam.blogappebsfol.domain.mapper.TagMapper;
 import com.epam.blogappebsfol.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,5 +30,14 @@ public class TagService {
 
     public TagEntity getTagByValue(String value) {
         return repository.findByValue(value);
+    }
+
+    public List<TagEntity> createTags(Set<String> tags) {
+        List<String> existingTags = repository.getAllTagValues();
+        Set<TagEntity> tagEntities = tags.stream()
+                .filter(tag -> !existingTags.contains(tag))
+                .map(tag -> TagEntity.builder().value(tag).posts(Set.of()).build())
+                .collect(Collectors.toSet());
+        return repository.saveAll(tagEntities);
     }
 }
