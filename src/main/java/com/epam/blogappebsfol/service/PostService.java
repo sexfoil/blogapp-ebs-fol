@@ -34,7 +34,7 @@ public class PostService {
      *
      * @param   pageNumber page number
      * @param   pageSize amount of posts per page
-     * @return  the set of TagEntity just created
+     * @return  the list of TagEntity just created
      */
     public List<PostDto> getPosts(int pageNumber, int pageSize) {
         Page<PostEntity> posts = repository.findAllPosts(PageRequest.of(pageNumber, pageSize));
@@ -49,7 +49,7 @@ public class PostService {
      * @param   tags the set of tags to search
      * @param   pageNumber page number
      * @param   pageSize amount of posts per page
-     * @return  the set of TagEntity just created
+     * @return  the list of TagEntity just created
      */
     public List<PostDto> getPostsByTags(Set<String> tags, int pageNumber, int pageSize) {
         Set<PostEntity> posts = tagService.getPostsByTag(tags, pageNumber, pageSize);

@@ -1,6 +1,5 @@
 package com.epam.blogappebsfol.service;
 
-import com.epam.blogappebsfol.domain.dto.PostDto;
 import com.epam.blogappebsfol.domain.exception.PostDuplicateException;
 import com.epam.blogappebsfol.domain.exception.PostNotFoundException;
 import com.epam.blogappebsfol.domain.mapper.PostMapper;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -18,7 +16,6 @@ import java.util.Set;
 import static com.epam.blogappebsfol.service.TestDataProvider.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,8 +28,6 @@ public class PostServiceTest {
     PostRepository repository;
     @Mock
     PostMapper postMapper;
-    @Mock
-    TagService tagService;
 
     @Test
     void givenPost_whenCreatePost_shouldReturnNewPost() {

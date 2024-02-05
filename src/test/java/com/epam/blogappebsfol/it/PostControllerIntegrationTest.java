@@ -2,10 +2,8 @@ package com.epam.blogappebsfol.it;
 
 import com.epam.blogappebsfol.BlogappEbsFolApplication;
 import com.epam.blogappebsfol.domain.dto.PostDto;
-import com.epam.blogappebsfol.service.TestDataProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;

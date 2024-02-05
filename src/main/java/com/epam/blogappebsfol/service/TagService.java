@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class TagService {
 
     private final TagRepository repository;
-    private final TagMapper mapper;
 
     /**
      *  Returns the set of posts with specified tags. Limited by page size.

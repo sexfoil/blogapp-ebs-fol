@@ -15,7 +15,6 @@ import java.util.Set;
 public class PostController {
 
     private final PostService postService;
-    private final TagService tagService;
 
     @GetMapping
     public List<PostDto> getAllPosts(
