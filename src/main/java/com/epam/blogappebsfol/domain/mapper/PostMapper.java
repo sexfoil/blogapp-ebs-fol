@@ -13,7 +13,6 @@ public interface PostMapper {
 
     PostDto postEntityToDto(PostEntity entity);
 
-    @Mapping(target = "tags", ignore = true)
     PostEntity postDtoToEntity(PostDto dto);
 
     default String fromTagEntity(TagEntity entity) {
@@ -23,6 +22,12 @@ public interface PostMapper {
     default Set<String> toDtoSet(Set<TagEntity> entities) {
         return entities.stream()
                 .map(TagEntity::getValue)
+                .collect(Collectors.toSet());
+    }
+
+    default Set<TagEntity> toEntitySet(Set<String> entities) {
+        return entities.stream()
+                .map(v -> TagEntity.builder().value(v).build())
                 .collect(Collectors.toSet());
     }
 }

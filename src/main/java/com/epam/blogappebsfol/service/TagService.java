@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,8 +25,12 @@ public class TagService {
     public Set<PostEntity> getPostsByTag(Set<String> tags, int pageNumber, int pageSize) {
         int pagesToSkip = pageNumber * pageSize;
         List<TagEntity> tagEntities = repository.findAllPostsByTags(tags);
-        return tagEntities.stream()
+        Set<PostEntity> allPosts = tagEntities.stream()
                 .flatMap(tagEntity -> tagEntity.getPosts().stream())
+                .collect(Collectors.toSet());
+
+        return allPosts.stream()
+                .sorted(Comparator.comparing(PostEntity::getTitle))
                 .skip(pagesToSkip)
                 .limit(pageSize)
                 .collect(Collectors.toSet());
@@ -36,15 +41,15 @@ public class TagService {
     }
 
     @Transactional
-    public List<TagEntity> createTags(Set<String> tags) {
+    public Set<TagEntity> createTags(Set<String> tags) {
         List<String> existingTags = repository.getAllTagValues();
         Set<TagEntity> tagEntities = tags.stream()
                 .filter(tag -> !existingTags.contains(tag))
                 .map(tag -> TagEntity.builder().value(tag).posts(Set.of()).build())
                 .collect(Collectors.toSet());
-        List<TagEntity> saved = repository.saveAll(tagEntities);
+        repository.saveAll(tagEntities);
 
         log.info("Tags were successfully created.");
-        return saved;
+        return tagEntities;
     }
 }

@@ -57,12 +57,12 @@ public class PostService {
         postEntity.setTags(tagEntities);
 
         PostEntity newPostEntity = repository.save(postEntity);
-        PostDto created = postMapper.postEntityToDto(newPostEntity);
+        PostDto newPostDto = postMapper.postEntityToDto(newPostEntity);
 
-        created.setTags(postMapper.toDtoSet(tagEntities));
+        newPostDto.setTags(postMapper.toDtoSet(tagEntities));
 
-        log.info("Post with id: {} was successfully created.", created.getId());
-        return created;
+        log.info("Post with id: {} was successfully created.", newPostDto.getId());
+        return newPostDto;
     }
 
     @Transactional

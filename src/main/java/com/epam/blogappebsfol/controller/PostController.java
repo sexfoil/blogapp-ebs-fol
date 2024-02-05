@@ -22,12 +22,12 @@ public class PostController {
 
     @GetMapping
     public List<PostDto> getAllPosts(
-            @RequestParam(required = false) Integer pageNumber,
-            @RequestParam(required = false) Integer pageSize) {
+            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "20") Integer pageSize) {
         return postService.getPosts(pageNumber, pageSize);
     }
 
-    @GetMapping("/tags")
+    @GetMapping("/filter")
     public List<PostDto> getAllPostsByTags(
             @RequestParam Set<String> tags,
             @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -38,13 +38,6 @@ public class PostController {
     @PostMapping
     public PostDto createPost(@RequestBody PostDto post) {
         return postService.createPost(post);
-    }
-
-    // todo DELETE BEFORE SEND
-    @PostMapping("/tags")
-    public List<TagEntity> createTags(@RequestBody PostDto post) {
-        assert post.getTags() != null;
-        return tagService.createTags(post.getTags());
     }
 
     @PatchMapping("/{id}")
