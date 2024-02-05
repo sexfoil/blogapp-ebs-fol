@@ -22,6 +22,14 @@ public class TagService {
     private final TagRepository repository;
     private final TagMapper mapper;
 
+    /**
+     *  Returns the set of posts with specified tags. Limited by page size.
+     *
+     * @param   tags the set of tags to search
+     * @param   pageNumber page number
+     * @param   pageSize amount of tags per page
+     * @return  the set of posts with specified tags
+     */
     public Set<PostEntity> getPostsByTag(Set<String> tags, int pageNumber, int pageSize) {
         int pagesToSkip = pageNumber * pageSize;
         List<TagEntity> tagEntities = repository.findAllPostsByTags(tags);
@@ -36,10 +44,22 @@ public class TagService {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     *  Returns tag entity
+     *
+     * @param   value the value of tag
+     * @return  the TagEntity with specified value
+     */
     public TagEntity getTagByValue(String value) {
         return repository.findByValue(value);
     }
 
+    /**
+     *  Returns set of created tags
+     *
+     * @param   tags the set of tags to create
+     * @return  the set of TagEntity just created
+     */
     @Transactional
     public Set<TagEntity> createTags(Set<String> tags) {
         List<String> existingTags = repository.getAllTagValues();

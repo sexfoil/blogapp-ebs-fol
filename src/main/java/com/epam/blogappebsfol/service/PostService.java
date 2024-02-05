@@ -29,6 +29,13 @@ public class PostService {
 
     private final TagService tagService;
 
+    /**
+     *  Returns list of posts. Limited by page size
+     *
+     * @param   pageNumber page number
+     * @param   pageSize amount of posts per page
+     * @return  the set of TagEntity just created
+     */
     public List<PostDto> getPosts(int pageNumber, int pageSize) {
         Page<PostEntity> posts = repository.findAllPosts(PageRequest.of(pageNumber, pageSize));
         return posts.stream()
@@ -36,6 +43,14 @@ public class PostService {
                 .toList();
     }
 
+    /**
+     *  Returns list of posts with tags specified. Limited by page size
+     *
+     * @param   tags the set of tags to search
+     * @param   pageNumber page number
+     * @param   pageSize amount of posts per page
+     * @return  the set of TagEntity just created
+     */
     public List<PostDto> getPostsByTags(Set<String> tags, int pageNumber, int pageSize) {
         Set<PostEntity> posts = tagService.getPostsByTag(tags, pageNumber, pageSize);
         return posts.stream()
@@ -43,6 +58,13 @@ public class PostService {
                 .toList();
     }
 
+    /**
+     *  Returns created post
+     *
+     * @param   post the post data to create
+     * @return  the post just created
+     * @throws PostDuplicateException if post exists
+     */
     @Transactional
     public PostDto createPost(PostDto post) {
         if (post.getId() != null) {
@@ -65,6 +87,14 @@ public class PostService {
         return newPostDto;
     }
 
+    /**
+     *  Returns post updated by tags
+     *
+     * @param   id the id of the post to update
+     * @param   tags the tags to update
+     * @return  the post just updated
+     * @throws PostNotFoundException if post does not exist
+     */
     @Transactional
     public PostDto updatePostTags(Long id, Set<String> tags) {
         PostEntity post = repository.findById(id)
@@ -80,6 +110,11 @@ public class PostService {
         return updated;
     }
 
+    /**
+     *  Delete the post
+     *
+     * @param   id the id of the post to delete
+     */
     @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
