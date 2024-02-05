@@ -2,7 +2,6 @@ package com.epam.blogappebsfol.controller;
 
 import com.epam.blogappebsfol.domain.dto.PostDto;
 import com.epam.blogappebsfol.service.PostService;
-import com.epam.blogappebsfol.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,7 +2,6 @@ package com.epam.blogappebsfol.service;
 
 import com.epam.blogappebsfol.domain.entity.PostEntity;
 import com.epam.blogappebsfol.domain.entity.TagEntity;
-import com.epam.blogappebsfol.domain.mapper.TagMapper;
 import com.epam.blogappebsfol.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
